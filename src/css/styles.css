@@ -43,12 +43,18 @@ input {
 }
 
 .board {
-    height: 100vh;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+
+  .column {
+    display: inline-block;
+  }
 }
 
 .column {
   width: 270px;
-  margin: 0 calc(0.4vw + 0.4vh + 0.2vmin) 0 0;
+  margin: 0 calc(0.4vw + 0.4vh + 0.2vmin) 50vh 0;
   height: 100%;
   box-sizing: border-box;
   display: inline-block;
