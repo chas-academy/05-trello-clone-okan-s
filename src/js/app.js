@@ -50,6 +50,24 @@ const jtrello = (function() {
   function createList() {
     event.preventDefault();
     console.log("This should create a new list");
+    $('.board').append(`
+    <div class="column">
+      <div class="list">
+          <div class="list-header">
+            ${$('#list-creation-dialog').find('input').val()}
+            <button class="button delete">X</button>
+          </div>
+          <ul class="list-cards">
+              <li class="add-new">
+                  <form class="new-card" action="index.html">
+                      <input type="text" name="title" placeholder="Enter card name here" />
+                      <button class="button add">Add card</button>
+                  </form>
+              </li>
+          </ul>
+        </div>
+    </div>`)
+    $('#list-creation-dialog').find('input').val(null)
   }
 
   function deleteList() {
