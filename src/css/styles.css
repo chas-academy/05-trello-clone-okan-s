@@ -1,8 +1,8 @@
 html,
 body {
-  background: #9999ff;
+  background: #1C262B;
   margin: 0;
-  padding: 30px 0 0;
+  padding: 0 calc(0.4vw + 0.4vh + 0.2vmin);
   font-family: sans-serif;
   color: #4d4d4d;
 }
@@ -48,7 +48,7 @@ input {
 
 .column {
   width: 270px;
-  margin: 0 5px;
+  margin: 0 calc(0.4vw + 0.4vh + 0.2vmin) 0 0;
   height: 100%;
   box-sizing: border-box;
   display: inline-block;
@@ -57,7 +57,7 @@ input {
 }
 
 .list {
-  background: #e2e4e6;
+  background: #4E6A78;
   border-radius: 3px;
   box-sizing: border-box;
   display: flex;
@@ -76,7 +76,7 @@ input {
   font-weight: bold;
   padding: 12px 10px;
   margin: 0;
-  color: #4d4d4d;
+  color: #ff0099;
 }
 
 .list-header .delete {
