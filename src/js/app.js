@@ -54,16 +54,19 @@ const jtrello = (function() {
 
   function deleteList() {
     console.log("This should delete the list you clicked on");
+    $(this).parentsUntil('.board').remove();
   }
 
   /* =========== Metoder för att hantera kort i listor nedan =========== */
   function createCard(event) {
     event.preventDefault();
     console.log("This should create a new card");
+    $(this).closest('.add-new').before(`<li class="card">${$(this).find('input').val()}<button class="button delete">X</button></li>`)
   }
 
   function deleteCard() {
     console.log("This should delete the card you clicked on");
+    $(this).closest('.card').remove();
   }
 
   // Metod för att rita ut element i DOM:en
