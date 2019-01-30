@@ -25,7 +25,7 @@ const jtrello = (function() {
     DOM.$cards = $('.card');
     
     DOM.$newListButton = $('button#new-list');
-    DOM.$deleteListButton = $('.list-header > button.delete');
+    DOM.$deleteListButton = $('.list-header > h4 > button.delete');
 
     DOM.$newCardForm = $('form.new-card');
     DOM.$deleteCardButton = $('.card > button.delete');
@@ -61,28 +61,43 @@ const jtrello = (function() {
   }
 
   
-
   /* ============== Metoder för att hantera listor nedan ============== */
   function createList() {
     event.preventDefault();
     console.log("This should create a new list");
     $('.board').append(`
-    <div class="column">
+    <div class="column card-panel blue-grey" style="padding: calc(0.375vw + 0.375vh + 0.1875vmin); padding-bottom: 0;">
       <div class="list">
+
           <div class="list-header">
-            ${$('#list-creation-dialog').find('input').val()}
-            <button class="button delete">X</button>
+              <h4 style="margin: 0 !important; color: white;">
+                  <span style="filter: drop-shadow(0 0 8px black);">${$('#list-creation-dialog').find('input').val()}</span>
+                  <button style="float: right;" class="delete waves-effect waves-light btn red accent-4">
+                      <i class="large material-icons">delete_forever</i>
+                  </button>
+              </h4>
           </div>
+
+
           <ul class="list-cards">
-              <li class="add-new">
+
+              <li class="add-new card-panel white" style="padding: calc(0.4vw + 0.4vh + 0.2vmin);">
                   <form class="new-card" action="index.html">
-                      <input type="text" name="title" placeholder="Enter card name here" />
-                      <button class="button add">Add card</button>
+                      <input type="text" name="title" placeholder="Enter new card title here" />
+                      <div class="row center" style="margin: 0;">
+                          <button class="add waves-effect waves-light btn-small center-align" style="width: 100%;">
+                              Add card
+                              <i class="material-icons" style="vertical-align: bottom;">add_to_photos</i>
+                          </button>
+                      </div>
                   </form>
               </li>
+
           </ul>
-        </div>
-    </div>`)
+
+      </div>
+    </div>
+    `)
     $('#list-creation-dialog').find('input').val(null)
     update()
   }
@@ -96,7 +111,17 @@ const jtrello = (function() {
   function createCard(event) {
     event.preventDefault();
     console.log("This should create a new card");
-    $(this).closest('.add-new').before(`<li class="card">${$(this).find('input').val()}<button class="button delete">X</button></li>`)
+    $(this).closest('.add-new').before(`
+    <li class="card card-panel blue-grey lighten-5 row valign-wrapper" style="padding: calc(0.4vw + 0.4vh + 0.2vmin);">
+      ${$(this).find('input').val()}
+      <button style="margin-left: auto;" class="dialog waves-effect waves-light btn-small blue">
+          <i class="material-icons">open_in_browser</i>
+      </button>
+      <button style="margin-left: calc(0.2vw + 0.2vh + 0.1vmin);" class="delete waves-effect waves-light btn-small red accent-4">
+          <i class="material-icons">backspace</i>
+      </button>
+    </li>
+    `)
     $(this).find('input').val(null)
     update()
   }
@@ -113,7 +138,7 @@ const jtrello = (function() {
 
   // Init metod som körs först
   function init() {
-    console.log(':::: Initializing JTrello ::::');
+    console.log('☞ Initializing Okanban ☜');
     // Förslag på privata metoder
     captureDOMEls();
     createTabs();
@@ -123,8 +148,8 @@ const jtrello = (function() {
 
     $(".list-cards").sortable({
       revert: 0,
-      connectWith: ".list-cards",
       cursor:"grabbing",
+      connectWith: ".list-cards",
     });
 
     $(".board").sortable({

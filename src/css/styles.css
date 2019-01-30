@@ -1,4 +1,4 @@
-html,
+/* html,
 body {
   background: #1C262B;
   margin: 0;
@@ -43,13 +43,23 @@ input {
 }
 
 .board {
-  display: flex;
-  flex-direction: row;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+
+  .column {
+    display: inline-block;
+  }
 }
 
 .column {
-  min-width: 270px;
-  margin: 0 calc(0.4vw + 0.4vh + 0.2vmin) 0 0;
+  width: 270px;
+  margin: 0 calc(0.4vw + 0.4vh + 0.2vmin) 50vh 0;
+  height: 100%;
+  box-sizing: border-box;
+  display: inline-block;
+  vertical-align: top;
+  white-space: nowrap;
 }
 
 .list {
@@ -185,4 +195,4 @@ input {
   cursor: grabbing;
   box-shadow: -2px 2px 8px rgba(0, 0, 0, 0.3), 0px 0px 1px rgba(0, 0, 0, 0.5);
   transform: rotate(4deg);
-}
+} */
