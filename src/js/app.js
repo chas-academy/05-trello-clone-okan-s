@@ -122,13 +122,13 @@ const jtrello = (function() {
     bindEvents();
 
     $(".list-cards").sortable({
-      revert: true,
+      revert: 0,
       connectWith: ".list-cards",
       cursor:"grabbing",
     });
 
     $(".board").sortable({
-      revert: true,
+      revert: 0,
       cursor:"grabbing",
     });
  
