@@ -102,10 +102,18 @@ const jtrello = (function() {
     createDialogs();
 
     bindEvents();
-    
-    $('.list-cards').sortable({
-      revert: true
+
+    $(".list-cards").sortable({
+      revert: true,
+      connectWith: ".list-cards",
+      cursor:"grabbing",
     });
+
+    $(".board").sortable({
+      revert: true,
+      cursor:"grabbing",
+    });
+ 
   }
 
   // All kod här
