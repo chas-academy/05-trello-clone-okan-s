@@ -46,6 +46,22 @@ const jtrello = (function() {
     DOM.$deleteCardButton.on('click', deleteCard);
   }
 
+  function unbindEvents() {
+    DOM.$newListButton.unbind()
+    DOM.$deleteListButton.unbind()
+    
+    DOM.$newCardForm.unbind()
+    DOM.$deleteCardButton.unbind()
+  }
+
+  function update(){
+    captureDOMEls()
+    unbindEvents()
+    bindEvents()
+  }
+
+  
+
   /* ============== Metoder för att hantera listor nedan ============== */
   function createList() {
     event.preventDefault();
@@ -68,6 +84,7 @@ const jtrello = (function() {
         </div>
     </div>`)
     $('#list-creation-dialog').find('input').val(null)
+    update()
   }
 
   function deleteList() {
@@ -81,6 +98,7 @@ const jtrello = (function() {
     console.log("This should create a new card");
     $(this).closest('.add-new').before(`<li class="card">${$(this).find('input').val()}<button class="button delete">X</button></li>`)
     $(this).find('input').val(null)
+    update()
   }
 
   function deleteCard() {
