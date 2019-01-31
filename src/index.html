@@ -29,6 +29,7 @@
 
         .column {
             display: block;
+            width: 270px;
             min-width: 270px;
             margin: 0 calc(0.4vw + 0.4vh + 0.2vmin) 0 0;
         }
@@ -36,65 +37,24 @@
         
 </head>
 <body>
-    <h1 style="margin: 0; padding: calc(0.4vw + 0.4vh + 0.2vmin); text-align:center; width: 100%; background-color: #149FA6;">
-            <span style="color:white;">Okanban</span><span style="color:#D0002E;"></span>
+    <h1 style="position: fixed; top: 0; margin: 0; padding: calc(0.4vw + 0.4vh + 0.2vmin) 0; text-align:center; width: 100%; background-color: #149FA6;">
+        <span style="color:white;">Okanban</span><span style="color:#D0002E;"></span>
     </h1>
 
-    <div class="board" style="padding: calc(1vw + 1vh + 0.5vmin) calc(1vw + 1vh + 0.5vmin) 0 calc(1vw + 1vh + 0.5vmin);">
-
-        <div class="column card-panel blue-grey" style="padding: calc(0.375vw + 0.375vh + 0.1875vmin); padding-bottom: 0;">
-            <div class="list">
-
-                <div class="list-header">
-                    <h4 style="margin: 0 !important; color: white;">
-                        <span style="filter: drop-shadow(0 0 8px black);">Todo</span>
-                        <button style="float: right;" class="delete waves-effect waves-light btn red accent-4">
-                            <i class="large material-icons">delete_forever</i>
-                        </button>
-                    </h4>
-                </div>
-
-
-                <ul class="list-cards">
-
-                    <li class="card card-panel blue-grey lighten-5 row valign-wrapper" style="padding: calc(0.4vw + 0.4vh + 0.2vmin);">
-                        Card #1
-                        <button style="margin-left: auto;" class="dialog waves-effect waves-light btn-small blue">
-                            <i class="material-icons">open_in_browser</i>
-                        </button>
-                        <button style="margin-left: calc(0.2vw + 0.2vh + 0.1vmin);" class="delete waves-effect waves-light btn-small red accent-4">
-                            <i class="material-icons">backspace</i>
-                        </button>
-                    </li>
-
-                    <li class="add-new card-panel white" style="padding: calc(0.4vw + 0.4vh + 0.2vmin);">
-                        <form class="new-card" action="index.html">
-                            <input type="text" name="title" placeholder="Enter new card title here" />
-                            <div class="row center" style="margin: 0;">
-                                <button class="add waves-effect waves-light btn-small center-align" style="width: 100%;">
-                                    Add card
-                                    <i class="material-icons" style="vertical-align: bottom;">add_to_photos</i>
-                                </button>
-                            </div>
-                        </form>
-                    </li>
-
-                </ul>
-
-            </div>
-        </div>
+    <div class="board" style="margin-top: 10vh; padding: calc(1vw + 1vh + 0.5vmin) calc(1vw + 1vh + 0.5vmin) 0 calc(1vw + 1vh + 0.5vmin);">
 
         <div class="column" style="background-color: white; height: 20%; padding: calc(0.4vw + 0.4vh + 0.2vmin);">
             <div id="list-creation-dialog" title="Create new list" >
                 <form> 
-                    <input type="text" name="title" placeholder="Enter new list title here" />
+                    <input type="text" name="title" placeholder="Enter new list title here" required/>
+                    <button id="new-list" class="add waves-effect waves-light btn-small center-align" style="width: 100%;">
+                        Add new list
+                        <i class="material-icons" style="vertical-align: bottom;">add_to_photos</i>
+                    </button>
                 </form>
             </div>
-            <button id="new-list" class="add waves-effect waves-light btn-small center-align" style="width: 100%;">
-                Add new list
-                <i class="material-icons" style="vertical-align: bottom;">add_to_photos</i>
-            </button>
         </div>
+
     </div>
 
 </body>

@@ -24,7 +24,7 @@ const jtrello = (function() {
     DOM.$lists = $('.list');
     DOM.$cards = $('.card');
     
-    DOM.$newListButton = $('button#new-list');
+    DOM.$newListForm = $('#list-creation-dialog > form');
     DOM.$deleteListButton = $('.list-header > h4 > button.delete');
 
     DOM.$newCardForm = $('form.new-card');
@@ -39,7 +39,7 @@ const jtrello = (function() {
   *  createList, deleteList, createCard och deleteCard etc.
   */
   function bindEvents() {
-    DOM.$newListButton.on('click', createList);
+    DOM.$newListForm.on('submit', createList);
     DOM.$deleteListButton.on('click', deleteList);
 
     DOM.$newCardForm.on('submit', createCard);
@@ -47,7 +47,7 @@ const jtrello = (function() {
   }
 
   function unbindEvents() {
-    DOM.$newListButton.unbind()
+    DOM.$newListForm.unbind()
     DOM.$deleteListButton.unbind()
     
     DOM.$newCardForm.unbind()
@@ -60,18 +60,30 @@ const jtrello = (function() {
     bindEvents()
   }
 
-  
+
   /* ============== Metoder för att hantera listor nedan ============== */
-  function createList() {
-    event.preventDefault();
+  function createList(e, title=null) {
+    console.log(e)
+    if (e !== null){
+      e.preventDefault();
+    }
+    
     console.log("This should create a new list");
-    $('.board').append(`
+
+    let finalTitle = ""
+    if(title !== null){
+      finalTitle = title
+    } else {
+      finalTitle = $('#list-creation-dialog').find('input').val()
+    }
+
+    let el = $(`
     <div class="column card-panel blue-grey" style="padding: calc(0.375vw + 0.375vh + 0.1875vmin); padding-bottom: 0;">
       <div class="list">
 
           <div class="list-header">
               <h4 style="margin: 0 !important; color: white;">
-                  <span style="filter: drop-shadow(0 0 8px black);">${$('#list-creation-dialog').find('input').val()}</span>
+                  <span style="filter: drop-shadow(0 0 8px black);">${finalTitle}</span>
                   <button style="float: right;" class="delete waves-effect waves-light btn red accent-4">
                       <i class="large material-icons">delete_forever</i>
                   </button>
@@ -82,8 +94,8 @@ const jtrello = (function() {
           <ul class="list-cards">
 
               <li class="add-new card-panel white" style="padding: calc(0.4vw + 0.4vh + 0.2vmin);">
-                  <form class="new-card" action="index.html">
-                      <input type="text" name="title" placeholder="Enter new card title here" />
+                  <form class="new-card">
+                      <input type="text" name="title" placeholder="Enter new card title here" required/>
                       <div class="row center" style="margin: 0;">
                           <button class="add waves-effect waves-light btn-small center-align" style="width: 100%;">
                               Add card
@@ -98,7 +110,20 @@ const jtrello = (function() {
       </div>
     </div>
     `)
+    $('#list-creation-dialog').parent().before(el)
     $('#list-creation-dialog').find('input').val(null)
+
+    if (title === "Todo"){
+      createCard(el, "Card #1")
+    }
+    if (title === "Doing"){
+      createCard(el, "Card #2")
+    }
+    if (title === "Done"){
+      createCard(el, "Card #3")
+    }
+      
+    
     update()
   }
 
@@ -108,12 +133,23 @@ const jtrello = (function() {
   }
 
   /* =========== Metoder för att hantera kort i listor nedan =========== */
-  function createCard(event) {
-    event.preventDefault();
+  function createCard(e, title = null) {
+    if (e.type){
+      e.preventDefault();
+    }
+    
     console.log("This should create a new card");
-    $(this).closest('.add-new').before(`
+
+    let finalTitle = ""
+    if(title !== null){
+      finalTitle = title
+    } else {
+      finalTitle = $(this).find('input').val()
+    }
+    
+    let el = $(`
     <li class="card card-panel blue-grey lighten-5 row valign-wrapper" style="padding: calc(0.4vw + 0.4vh + 0.2vmin);">
-      ${$(this).find('input').val()}
+      ${finalTitle}
       <button style="margin-left: auto;" class="dialog waves-effect waves-light btn-small blue">
           <i class="material-icons">open_in_browser</i>
       </button>
@@ -122,7 +158,14 @@ const jtrello = (function() {
       </button>
     </li>
     `)
-    $(this).find('input').val(null)
+
+    if (e.type){
+      $(this).closest('.add-new').before(el)
+      $(this).find('input').val(null)
+    }else {
+      e.find('.add-new').before(el)
+    }
+    
     update()
   }
 
@@ -145,6 +188,10 @@ const jtrello = (function() {
     createDialogs();
 
     bindEvents();
+
+    createList(null,"Todo")
+    createList(null,"Doing")
+    createList(null,"Done")
 
     $(".list-cards").sortable({
       revert: 0,
