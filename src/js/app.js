@@ -101,9 +101,7 @@ const jtrello = (function() {
               </h4>
           </div>
 
-
           <ul class="list-cards">
-
               <li class="add-new card-panel white" style="padding: calc(0.4vw + 0.4vh + 0.2vmin);">
                   <form class="new-card">
                       <input type="text" name="title" placeholder="Enter new card title here" required/>
@@ -115,7 +113,6 @@ const jtrello = (function() {
                       </div>
                   </form>
               </li>
-
           </ul>
 
       </div>
@@ -185,11 +182,9 @@ const jtrello = (function() {
       e.find('.add-new').before(el)
     }
 
-    // console.log($(`.dialog#${uniq_id}`))
-
     $(`.dialog#${uniq_id}`).dialog({
       dragable: false,
-      resizeable: false,
+      resizable: false,
       autoOpen: false,
       width: "347px",
     })
@@ -210,9 +205,10 @@ const jtrello = (function() {
     .css('right', '.3em')
     .html('<i class="material-icons">close</i>')
 
-    .closest('.ui-dialog-titlebar')
-    .after('<div class="card-action" id="tabs" style="padding: 0;"></div>')
-    
+    .closest('.ui-dialog')
+    .find('.ui-dialog-content')
+    .html('<div class="card-action" id="tabs" style="padding: 0;"></div>')
+
     $(`.dialog#${uniq_id}`).parent().find('.card-action')
     .html(`
     <ul class="tabs blue-grey lighten-4">
@@ -220,29 +216,24 @@ const jtrello = (function() {
       <li><a href="#tabs-2" style="margin-right: 0;">Due Date</a></li>
     </ul>
     <div id="tabs-1">
-      <label">Textarea</label>
-      <textarea class="materialize-textarea"></textarea>
+      <label for="${uniq_id}1">Textarea</label>
+      <textarea id="${uniq_id}1" class="materialize-textarea"></textarea>
     </div>
     <div id="tabs-2">
-      <label for="${uniq_id}2">Textarea</label>
-      <textarea id="${uniq_id}2" class="materialize-textarea"></textarea>
+      Date: <input type="text" id="datepicker-${uniq_id}">
     </div>
     `)
     .tabs()
 
-    // console.log($(`.dialog#${uniq_id}`).parent().find('.card-action > ul > li'))
     $(`.dialog#${uniq_id}`).parent().find('.card-action > ul > li')
     .removeAttr('class')
 
-    console.log($(`.dialog#${uniq_id}`).parent().find('.card-action'))
+    $(`.dialog#${uniq_id}`).parent().find(`.card-action #datepicker-${uniq_id}`)
+    .datepicker({dateFormat: 'DD d MM yy'})
 
     el.find('.btn-small.blue').on('click', function() {
       $(`.dialog#${uniq_id}`).dialog('open')
     });
-
-    //{appendTo: el.find('.dialog')}
-
-    // el.find('.dialog').hide()
     
     update()
   }
