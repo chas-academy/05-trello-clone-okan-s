@@ -11,6 +11,8 @@
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
+    <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" rel="stylesheet"> -->
+
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <style>
@@ -33,6 +35,21 @@
             min-width: 270px;
             margin: 0 calc(0.4vw + 0.4vh + 0.2vmin) 0 0;
         }
+
+        /* Align icon with button text */
+        .material-icons {
+            vertical-align: bottom;
+        }
+
+        ul.tabs > li[aria-selected="true"]{
+            border: 2px solid #bac2c6; 
+            border-radius: 5px;
+        }
+
+        .ui-tabs .ui-tabs-nav li {
+            border-bottom-width: 2px !important;
+        }
+        
     </style>
         
 </head>

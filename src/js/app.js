@@ -58,12 +58,23 @@ const jtrello = (function() {
     captureDOMEls()
     unbindEvents()
     bindEvents()
+
+    $(".list-cards").sortable({
+      revert: 0,
+      cursor:"grabbing",
+      connectWith: ".list-cards",
+    });
+
+    $(".board").sortable({
+      revert: 0,
+      cursor:"grabbing",
+    });
   }
 
 
   /* ============== Metoder för att hantera listor nedan ============== */
   function createList(e, title=null) {
-    console.log(e)
+    // console.log(e)
     if (e !== null){
       e.preventDefault();
     }
@@ -146,13 +157,21 @@ const jtrello = (function() {
     } else {
       finalTitle = $(this).find('input').val()
     }
-    
+
+    var randLetter = String.fromCharCode(65 + Math.floor(Math.random() * 26));
+    var uniq_id = randLetter + Date.now();
+
     let el = $(`
     <li class="card card-panel blue-grey lighten-5 row valign-wrapper" style="padding: calc(0.4vw + 0.4vh + 0.2vmin);">
       ${finalTitle}
-      <button style="margin-left: auto;" class="dialog waves-effect waves-light btn-small blue">
+
+      <button style="margin-left: auto;" class="waves-effect waves-light btn-small blue" data="${uniq_id}">
           <i class="material-icons">open_in_browser</i>
       </button>
+
+      <div class="dialog" title="${finalTitle}" id="${uniq_id}">
+      </div>
+
       <button style="margin-left: calc(0.2vw + 0.2vh + 0.1vmin);" class="delete waves-effect waves-light btn-small red accent-4">
           <i class="material-icons">backspace</i>
       </button>
@@ -165,6 +184,65 @@ const jtrello = (function() {
     }else {
       e.find('.add-new').before(el)
     }
+
+    // console.log($(`.dialog#${uniq_id}`))
+
+    $(`.dialog#${uniq_id}`).dialog({
+      dragable: false,
+      resizeable: false,
+      autoOpen: false,
+      width: "347px",
+    })
+    
+    $(`.dialog#${uniq_id}`)
+    .parent()
+    .addClass('card card-panel blue-grey lighten-4')
+
+    .find('.ui-dialog-titlebar')
+    .addClass('card-title')
+    .css('padding-left', '0.5em')
+    .css('padding-right', '0.5em')
+
+    .find('button')
+    .removeAttr('class')
+    .addClass('waves-effect waves-light btn-small red accent-4')
+    .css('position', 'absolute')
+    .css('right', '.3em')
+    .html('<i class="material-icons">close</i>')
+
+    .closest('.ui-dialog-titlebar')
+    .after('<div class="card-action" id="tabs" style="padding: 0;"></div>')
+    
+    $(`.dialog#${uniq_id}`).parent().find('.card-action')
+    .html(`
+    <ul class="tabs blue-grey lighten-4">
+      <li><a href="#tabs-1" style="margin-right: 0;">Description</a></li>
+      <li><a href="#tabs-2" style="margin-right: 0;">Due Date</a></li>
+    </ul>
+    <div id="tabs-1">
+      <label">Textarea</label>
+      <textarea class="materialize-textarea"></textarea>
+    </div>
+    <div id="tabs-2">
+      <label for="${uniq_id}2">Textarea</label>
+      <textarea id="${uniq_id}2" class="materialize-textarea"></textarea>
+    </div>
+    `)
+    .tabs()
+
+    // console.log($(`.dialog#${uniq_id}`).parent().find('.card-action > ul > li'))
+    $(`.dialog#${uniq_id}`).parent().find('.card-action > ul > li')
+    .removeAttr('class')
+
+    console.log($(`.dialog#${uniq_id}`).parent().find('.card-action'))
+
+    el.find('.btn-small.blue').on('click', function() {
+      $(`.dialog#${uniq_id}`).dialog('open')
+    });
+
+    //{appendTo: el.find('.dialog')}
+
+    // el.find('.dialog').hide()
     
     update()
   }
@@ -187,22 +265,11 @@ const jtrello = (function() {
     createTabs();
     createDialogs();
 
-    bindEvents();
+    update();
 
     createList(null,"Todo")
     createList(null,"Doing")
     createList(null,"Done")
-
-    $(".list-cards").sortable({
-      revert: 0,
-      cursor:"grabbing",
-      connectWith: ".list-cards",
-    });
-
-    $(".board").sortable({
-      revert: 0,
-      cursor:"grabbing",
-    });
  
   }
 
