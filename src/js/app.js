@@ -119,6 +119,7 @@ const jtrello = (function() {
     </div>
     `)
     $('#list-creation-dialog').parent().before(el)
+    el.effect('pulsate')
     $('#list-creation-dialog').find('input').val(null)
 
     if (title === "Todo"){
@@ -137,7 +138,7 @@ const jtrello = (function() {
 
   function deleteList() {
     console.log("This should delete the list you clicked on");
-    $(this).parentsUntil('.board').remove();
+    $(this).parentsUntil('.board').effect('fade', function() {$(this).parentsUntil('.board').remove()})
   }
 
   /* =========== Metoder för att hantera kort i listor nedan =========== */
@@ -159,7 +160,7 @@ const jtrello = (function() {
     var uniq_id = randLetter + Date.now();
 
     let el = $(`
-    <li class="card card-panel blue-grey lighten-5 row valign-wrapper" style="padding: calc(0.4vw + 0.4vh + 0.2vmin);">
+    <li id="${uniq_id}" class="card card-panel blue-grey lighten-5 row valign-wrapper" style="padding: calc(0.4vw + 0.4vh + 0.2vmin);">
       ${finalTitle}
 
       <button style="margin-left: auto;" class="waves-effect waves-light btn-small blue" data="${uniq_id}">
@@ -187,6 +188,7 @@ const jtrello = (function() {
       resizable: false,
       autoOpen: false,
       width: "347px",
+      hide: {effect: "puff"} 
     })
     
     $(`.dialog#${uniq_id}`)
@@ -234,13 +236,15 @@ const jtrello = (function() {
     el.find('.btn-small.blue').on('click', function() {
       $(`.dialog#${uniq_id}`).dialog('open')
     });
+
+    $(`li#${uniq_id}.card`).effect('bounce')
     
     update()
   }
 
   function deleteCard() {
     console.log("This should delete the card you clicked on");
-    $(this).closest('.card').remove();
+    $(this).closest('.card').effect('fade', function() {$(this).closest('.card').remove()})
   }
 
   // Metod för att rita ut element i DOM:en
