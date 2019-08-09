@@ -1,114 +1,197 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
     <title>jQuery - Okanban - Okan S.</title>
+
     <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
 
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
     <!-- For material icons -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
 
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" rel="stylesheet">
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css"
+      rel="stylesheet"
+    />
 
     <style>
-        body {
-            background: #1C262B;
-        }
+      body,
+      html {
+        background: #1c262b;
+        height: 100vh;
+        width: 100vw;
+      }
 
-        .btn, .btn-small{
-            padding: 0 8px;
-        }
+      .btn,
+      .btn-small {
+        padding: 0 8px;
+      }
 
-        .board {
-            display: flex;
-            flex-direction: row;
-        }
+      .board {
+        display: flex;
+        flex-direction: row;
+      }
 
-        .column {
-            display: block;
-            width: 270px;
-            min-width: 270px;
-            margin: 0 calc(0.4vw + 0.4vh + 0.2vmin) 0 0;
-        }
+      .column {
+        display: block;
+        width: 270px;
+        min-width: 270px;
+        margin: 0 calc(0.4vw + 0.4vh + 0.2vmin) 0 0;
+      }
 
-        /* Align icon with button text */
-        .material-icons {
-            vertical-align: bottom;
-        }
+      /* Align icon with button text */
+      .material-icons {
+        vertical-align: bottom;
+      }
 
-        ul.tabs > li[aria-selected="true"]{
-            border: 2px solid #bac2c6; 
-            border-radius: 5px;
-        }
+      ul.tabs > li[aria-selected="true"] {
+        border: 2px solid #bac2c6;
+        border-radius: 5px;
+      }
 
-        .ui-tabs .ui-tabs-nav li {
-            border-bottom-width: 2px !important;
-        }
+      .ui-tabs .ui-tabs-nav li {
+        border-bottom-width: 2px !important;
+      }
 
-        .rainbow{
-            background: -webkit-linear-gradient(left, red,orange,yellow,green,blue,indigo,violet);
-            background: -moz-linear-gradient(left, red,orange,yellow,green,blue,indigo,violet,red);
-            background: -o-linear-gradient(left, red,orange,yellow,green,blue,indigo,violet,red);
-            background: -ms-linear-gradient(left, red,orange,yellow,green,blue,indigo,violet,red);
-            background: linear-gradient(to right, red,orange,yellow,green,blue,indigo,violet,red);
-            background-repeat:repeat-x;
-            
-            -webkit-animation:go 5s linear infinite;
-            -moz-animation:go 5s linear infinite;
-            -o-animation:go 5s linear infinite;
-            -ms-animation:go 5s linear infinite;
-            animation:go 5s linear infinite;
-        }
+      .rainbow {
+        background: -webkit-linear-gradient(
+          left,
+          red,
+          orange,
+          yellow,
+          green,
+          blue,
+          indigo,
+          violet
+        );
+        background: -moz-linear-gradient(
+          left,
+          red,
+          orange,
+          yellow,
+          green,
+          blue,
+          indigo,
+          violet,
+          red
+        );
+        background: -o-linear-gradient(
+          left,
+          red,
+          orange,
+          yellow,
+          green,
+          blue,
+          indigo,
+          violet,
+          red
+        );
+        background: -ms-linear-gradient(
+          left,
+          red,
+          orange,
+          yellow,
+          green,
+          blue,
+          indigo,
+          violet,
+          red
+        );
+        background: linear-gradient(
+          to right,
+          red,
+          orange,
+          yellow,
+          green,
+          blue,
+          indigo,
+          violet,
+          red
+        );
+        background-repeat: repeat-x;
 
-        @-webkit-keyframes go{
-            0%{background-position:0;}
-            100%{background-position:100vw 0;}
-        }
+        -webkit-animation: go 5s linear infinite;
+        -moz-animation: go 5s linear infinite;
+        -o-animation: go 5s linear infinite;
+        -ms-animation: go 5s linear infinite;
+        animation: go 5s linear infinite;
+      }
 
-        @-moz-keyframes go{
-            0%{background-position:0;}
-            100%{background-position:100vw 0;}
+      @-webkit-keyframes go {
+        0% {
+          background-position: 0;
         }
-
-        @-o-keyframes go{
-            0%{background-position:0;}
-            100%{background-position:100vw 0;}
+        100% {
+          background-position: 100vw 0;
         }
+      }
 
-        @-ms-keyframes go{
-            0%{background-position:0;}
-            100%{background-position:100vw 0;}
+      @-moz-keyframes go {
+        0% {
+          background-position: 0;
         }
-
-        @keyframes go{
-            0%{background-position:0;}
-            100%{background-position:100vw 0;}
+        100% {
+          background-position: 100vw 0;
         }
+      }
 
+      @-o-keyframes go {
+        0% {
+          background-position: 0;
+        }
+        100% {
+          background-position: 100vw 0;
+        }
+      }
+
+      @-ms-keyframes go {
+        0% {
+          background-position: 0;
+        }
+        100% {
+          background-position: 100vw 0;
+        }
+      }
+
+      @keyframes go {
+        0% {
+          background-position: 0;
+        }
+        100% {
+          background-position: 100vw 0;
+        }
+      }
     </style>
-        
-</head>
-<body>
+  </head>
+  <body>
+    <header
+      style="padding: calc(0.4vw + 0.4vh + 0.2vmin) 0; text-align:center; width: 100%; background-color: #149FA6;"
+    >
+      <h1 style="margin: 0">
+        <span style="color:white;" class="center-align">Okanban</span>
+      </h1>
 
-    <header style="position: fixed; top: 0; margin: 0; padding: calc(0.4vw + 0.4vh + 0.2vmin) 0; text-align:center; width: 100%; background-color: #149FA6;">
-        <h1 style="margin: 0">
-            <span style="color:white;" class="center-align">Okanban</span>
-        </h1>
+      <button id="rainbow" class="waves-effect waves-light btn-small indigo">
+        Rainbow
+      </button>
 
-        <button id="rainbow" class="waves-effect waves-light btn-small indigo">
-            Rainbow
-        </button>
-
-        <!-- <button id="save-kanban" class="waves-effect waves-light btn-small light-green" >
+      <!-- <button id="save-kanban" class="waves-effect waves-light btn-small light-green" >
             Save Kanban
             <i class="material-icons">save</i>
         </button>
@@ -117,25 +200,36 @@
             Reset Kanban
             <i class="material-icons">autorenew</i>
         </button> -->
-
     </header>
 
-    <div class="board" style="margin-top: 14vh; padding: calc(1vw + 1vh + 0.5vmin) calc(1vw + 1vh + 0.5vmin) 0 calc(1vw + 1vh + 0.5vmin);">
-
-        <div class="column" style="background-color: white; height: 20%; padding: calc(0.4vw + 0.4vh + 0.2vmin);">
-            <div id="list-creation-dialog" title="Create new list" >
-                <form> 
-                    <input type="text" name="title" placeholder="Enter new list title here" required/>
-                    <button id="new-list" class="add waves-effect waves-light btn-small center-align" style="width: 100%;">
-                        Add new list
-                        <i class="material-icons">add_to_photos</i>
-                    </button>
-                </form>
-            </div>
+    <div
+      class="board"
+      style="padding: calc(1vw + 1vh + 0.5vmin) calc(1vw + 1vh + 0.5vmin) 0 calc(1vw + 1vh + 0.5vmin);"
+    >
+      <div
+        class="column"
+        style="background-color: white; height: 20%; padding: calc(0.4vw + 0.4vh + 0.2vmin);"
+      >
+        <div id="list-creation-dialog" title="Create new list">
+          <form>
+            <input
+              type="text"
+              name="title"
+              placeholder="Enter new list title here"
+              required
+            />
+            <button
+              id="new-list"
+              class="add waves-effect waves-light btn-small center-align"
+              style="width: 100%;"
+            >
+              Add new list
+              <i class="material-icons">add_to_photos</i>
+            </button>
+          </form>
         </div>
-
+      </div>
     </div>
-
-</body>
-<script src="js/app.js"></script>
+  </body>
+  <script src="js/app.js"></script>
 </html>
